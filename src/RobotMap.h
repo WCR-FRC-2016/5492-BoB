@@ -4,8 +4,27 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+//Alvin - Basically set ports and talon numbers for talons and controllers.
+//Put them here so its all in one place
 #pragma once
+//Drive Base
+const int frontLeftDrive = 14; //encoder
+const int frontRightDrive = 1; //encoder
+const int backLeftDrive = 15;
+const int backRightDrive = 0;
+//Collector
+const int leftCollector = 10;
+const int rightCollector = 11;
+//Climb
+const int climb1 = 2;
+const int climb2 = 3;
+//Elevator
+const int elevator1 = 4;
+const int elevator2 = 5;
+//Pneumatics
+const int pneuamticValve1 = 7;
+const int pneumaticValve2 = 8;
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

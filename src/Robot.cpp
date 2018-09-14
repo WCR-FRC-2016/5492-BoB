@@ -7,39 +7,28 @@
 #include <iostream>
 #include <string>
 #include <Robot.h>
-
 #include <Commands/Scheduler.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <IterativeRobot.h>
-
 #include "OI.h"
 #include <ctre/Phoenix.h>
-
 #include <Joystick.h>
 #include <RobotDrive.h>
+#include <WPILib.h>
+#include <TankDrive.h>
+
 
 ExampleSubsystem Robot::m_subsystem;
-OI Robot::m_oi;
+//OI * Robot::oi;
+
+
 
 void Robot::RobotInit() {
-
 	m_chooser.AddDefault("Default Auto", &m_defaultAuto);
 	m_chooser.AddObject("My Auto", &m_myAuto);
 	frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
 
-	WPI_TalonSRX FrontL = new WPI_TalonSRX (1);
-	WPI_TalonSRX FrontR = new WPI_TalonSRX (2);
-	WPI_TalonSRX BackL = new WPI_TalonSRX (3);
-	WPI_TalonSRX BackR = new WPI_TalonSRX (4);
 
-	FrontR.SetInverted(true);
-	BackR.SetInverted(true);
-
-	BackL.Set(ctre::phoenix::motorcontrol::ControlMode::Follower, 1);
-	BackR.Set(ctre::phoenix::motorcontrol::ControlMode::Follower, 2);
-
-	Faults _faults_L;
-	Faults _faults_R;
 }
 
 /**

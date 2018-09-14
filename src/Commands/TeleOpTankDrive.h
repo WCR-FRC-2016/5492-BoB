@@ -5,14 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include <WPILib.h>
-#include <Joystick.h>
+#include <Commands/Command.h>
 
+class TeleOpTankDrive : public frc::Command {
+public:
+	TeleOpTankDrive();
+	void Initialize() override;
+	void Execute() override;
+	bool IsFinished() override;
+	void End() override;
+	void Interrupted() override;
+};
 
-OI::OI() {
-	Joystick * _driverStick = new Joystick(0);
-
-	// Process operator interface input here.
-}

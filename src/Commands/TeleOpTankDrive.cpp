@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include "TeleOpTankDrive.h"
 #include "TankDrive.h"
 #include "../RobotMap.h"
 #include "OI.h"
@@ -15,29 +16,37 @@
 
 #include "OI.h"
 #include <ctre/Phoenix.h>
-
+#include <TankDrive.h>
 #include <Joystick.h>
 #include <RobotDrive.h>
+TeleOpTankDrive::TeleOpTankDrive() {
+	// Use Requires() here to declare subsystem dependencies
+	// eg. Requires(Robot::chassis.get());
+	Requires(frc::Subsystem("TankDrive"));
+}
 
-TankDrive::TankDrive() : frc::Subsystem("TankDrive"){
-
-	WPI_TalonSRX FrontL = new WPI_TalonSRX (frontLeftDrive);
-	WPI_TalonSRX FrontR = new WPI_TalonSRX (frontRightDrive);
-	WPI_TalonSRX BackL = new WPI_TalonSRX (backLeftDrive);
-	WPI_TalonSRX BackR = new WPI_TalonSRX (backRightDrive);
-
-	FrontR.SetInverted(true);
-	BackR.SetInverted(true);
-
-	BackL.Set(ctre::phoenix::motorcontrol::ControlMode::Follower, 1);
-	BackR.Set(ctre::phoenix::motorcontrol::ControlMode::Follower, 2);
+// Called just before this Command runs the first time
+void TeleOpTankDrive::Initialize() {
 
 }
 
-void TankDrive::InitDefaultCommand() {
-	// Set the default command for a subsystem here.
-	// SetDefaultCommand(new MySpecialCommand());
+// Called repeatedly when this Command is scheduled to run
+void TeleOpTankDrive::Execute() {
+
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+// Make this return true when this Command no longer needs to run execute()
+bool TeleOpTankDrive::IsFinished() {
+	return false;
+}
+
+// Called once after isFinished returns true
+void TeleOpTankDrive::End() {
+
+}
+
+// Called when another command which requires one or more of the same
+// subsystems is scheduled to run
+void TeleOpTankDrive::Interrupted() {
+
+}
