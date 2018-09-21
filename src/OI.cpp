@@ -13,6 +13,6 @@
 
 OI::OI() {
 	Joystick * _driverStick = new Joystick(0);
-
+	_driverStick->getY();
 	// Process operator interface input here.
 }

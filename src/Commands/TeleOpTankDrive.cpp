@@ -6,23 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "TeleOpTankDrive.h"
-#include "TankDrive.h"
-#include "../RobotMap.h"
-#include "OI.h"
-#include "RobotDrive.h"
-#include <Commands/Scheduler.h>
-#include <SmartDashboard/SmartDashboard.h>
-#include <IterativeRobot.h>
+#include "../Robot.h"
 
-#include "OI.h"
-#include <ctre/Phoenix.h>
-#include <TankDrive.h>
-#include <Joystick.h>
-#include <RobotDrive.h>
+
 TeleOpTankDrive::TeleOpTankDrive() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
-	Requires(frc::Subsystem("TankDrive"));
+	Requires(&Robot::m_tankdrive);
 }
 
 // Called just before this Command runs the first time

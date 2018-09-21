@@ -15,11 +15,13 @@
 #include <Joystick.h>
 #include <RobotDrive.h>
 #include <WPILib.h>
-#include <TankDrive.h>
+#include <Subsystems/TankDrive.h>
+#include "Drive/DifferentialDrive.h"
 
 
 ExampleSubsystem Robot::m_subsystem;
-//OI * Robot::oi;
+TankDrive Robot::m_tankdrive;
+OI Robot::m_oi;
 
 
 
