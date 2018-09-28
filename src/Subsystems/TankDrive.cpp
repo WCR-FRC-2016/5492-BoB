@@ -22,6 +22,7 @@ WPI_TalonSRX * FrontL;
 WPI_TalonSRX * FrontR;
 WPI_TalonSRX * BackL;
 WPI_TalonSRX * BackR;
+
 DifferentialDrive * _diffDrive;
 TankDrive::TankDrive() : frc::Subsystem("TankDrive"){
 
@@ -29,10 +30,36 @@ TankDrive::TankDrive() : frc::Subsystem("TankDrive"){
 	FrontR = new WPI_TalonSRX (frontRightDrive);
 	BackL = new WPI_TalonSRX (backLeftDrive);
 	BackR = new WPI_TalonSRX (backRightDrive);
-	_diffDrive = new DifferentialDrive(FrontL, FrontR);
+	_diffDrive = new DifferentialDrive (*FrontL, *FrontR);
 
 	FrontR->SetInverted(true);
+	FrontL->SetInverted(false);
 	BackR->SetInverted(true);
+	BackL->SetInverted(false);
+
+	FrontR->ConfigPeakCurrentLimit(50,0);
+	FrontL->ConfigPeakCurrentLimit(50,0);
+	BackR->ConfigPeakCurrentLimit(50,0);
+	BackL->ConfigPeakCurrentLimit(50,0);
+
+	FrontR->ConfigPeakCurrentDuration(1000,0);
+	FrontL->ConfigPeakCurrentDuration(1000,0);
+	BackR->ConfigPeakCurrentDuration(1000,0);
+	BackL->ConfigPeakCurrentDuration(1000,0);
+
+	FrontR->ConfigOpenloopRamp(.3,0);
+	FrontL->ConfigOpenloopRamp(.3,0);
+	BackR->ConfigOpenloopRamp(.3,0);
+	BackL->ConfigOpenloopRamp(.3,0);
+
+	FrontR->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1);
+	FrontL->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1);
+
+	FrontR->EnableCurrentLimit(true);
+	FrontL->EnableCurrentLimit(true);
+	BackR->EnableCurrentLimit(true);
+	BackL->EnableCurrentLimit(true);
+
 
 	BackL->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, frontLeftDrive);
 	BackR->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, frontRightDrive);
@@ -50,17 +77,33 @@ void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 
 	parsedY = pow(abs(yAxis), power) * (yAxis / abs(yAxis));
 
-	if (xAxis > 0)
+	if (yAxis > 0) // forward back
 	{
+		//TO BE
+		//FILLED IN
 		//Turning Left?
-		if (yAxis > 0)
+		if (xAxis > 0) //right forwards
 		{
 			parsedLeft = parsedY - parsedX;
 			parsedRight = (parsedY > parsedX)?parsedY:parsedX;
 		}
-		else
+		else //left forwards
 		{
-
+			parsedLeft = (parsedY > -parsedX)?parsedY:-parsedX;
+			parsedRight = parsedY + parsedX;
+		}
+	}
+	else //backwards
+	{
+		if (xAxis > 0) //right
+		{
+			parsedLeft = (-parsedY > parsedX)?parsedY:-parsedX;
+			parsedRight = parsedY + parsedX;
+		}
+		else //left
+		{
+			parsedLeft = parsedY - parsedX;
+			parsedRight = (-parsedY > -parsedX)?parsedY:parsedX;
 		}
 	}
 
