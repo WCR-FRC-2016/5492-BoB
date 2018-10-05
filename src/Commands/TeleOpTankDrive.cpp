@@ -7,6 +7,7 @@
 
 #include "TeleOpTankDrive.h"
 #include "../Robot.h"
+#include "OI.h"
 
 
 TeleOpTankDrive::TeleOpTankDrive() {
@@ -17,11 +18,12 @@ TeleOpTankDrive::TeleOpTankDrive() {
 
 // Called just before this Command runs the first time
 void TeleOpTankDrive::Initialize() {
-
+	Robot::m_tankdrive.TankDriveInitialize();
 }
 
-// Called repeatedly when this Command is scheduled to run
+// Called repeatedly when this Command is scheduled to runTankDriveInitiatlize()
 void TeleOpTankDrive::Execute() {
+	Robot::m_tankdrive.ArcadeDrive(Robot::m_oi.ReturnDriverXAxis(),Robot::m_oi.ReturnDriverYAxis());
 
 }
 

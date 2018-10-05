@@ -13,10 +13,12 @@ class TankDrive : public frc::Subsystem {
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
-	void ArcadeDrive(double xAxis, double yAxis);
+	bool initialized;
 
 public:
 	TankDrive();
+	void TankDriveInitialize();
 	void InitDefaultCommand() override;
+	void ArcadeDrive(double xAxis, double yAxis);
 };
 

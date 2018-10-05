@@ -6,9 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-
+#include <XboxController.h>
 class OI {
 public:
 	OI();
-
+	double ReturnDriverXAxis();
+	double ReturnDriverYAxis();
+private:
+	frc::XboxController * _driverStick;
 };

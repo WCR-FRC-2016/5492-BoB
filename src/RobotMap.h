@@ -25,6 +25,16 @@ const int elevator2 = 5;
 const int pneuamticValve1 = 7;
 const int pneumaticValve2 = 8;
 
+const double RightP = 0.0678;
+const double RightI = 6.78E-6;
+const double RightD = 0;
+const double LeftP = 0.073814156 ;
+const double LeftI = 7.3814156E-6;
+const double LeftD = 0;
+
+const double MaxOutput = 1;
+const double NominalOutput = .25;
+const double PIDDeadband = 0.011415692;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

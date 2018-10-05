@@ -9,10 +9,21 @@
 
 #include <WPILib.h>
 #include <Joystick.h>
+#include <XboxController.h>
+#include <GenericHID.h>
 
 
 OI::OI() {
-	Joystick * _driverStick = new Joystick(0);
+ _driverStick = 0;
+	JoystickButton * driveButton1 = new JoystickButton(_driverStick, 1);
 
 	// Process operator interface input here.
+
+}
+
+double OI::ReturnDriverXAxis(){
+	return _driverStick->GetX(frc::GenericHID::kLeftHand);
+}
+double OI::ReturnDriverYAxis(){
+	return _driverStick->GetY(frc::GenericHID::kRightHand);
 }
