@@ -14,8 +14,7 @@
 
 
 OI::OI() {
- _driverStick = 0;
-	JoystickButton * driveButton1 = new JoystickButton(_driverStick, 1);
+	_driverStick = 0;
 
 	// Process operator interface input here.
 
@@ -26,4 +25,8 @@ double OI::ReturnDriverXAxis(){
 }
 double OI::ReturnDriverYAxis(){
 	return _driverStick->GetY(frc::GenericHID::kRightHand);
+}
+void OI::InitButtons(){
+	 _driverStick = new XboxController(0);
+	 JoystickButton * driveButton1 = new JoystickButton(_driverStick, 1);
 }
