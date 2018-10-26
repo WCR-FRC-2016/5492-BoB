@@ -17,6 +17,7 @@
 #include <WPILib.h>
 #include <Subsystems/TankDrive.h>
 #include "Drive/DifferentialDrive.h"
+#include <iostream>
 
 
 ExampleSubsystem Robot::m_subsystem;
@@ -29,6 +30,7 @@ void Robot::RobotInit() {
 	m_chooser.AddDefault("Default Auto", &m_defaultAuto);
 	m_chooser.AddObject("My Auto", &m_myAuto);
 	frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+	m_oi.OIInit();
 
 
 }

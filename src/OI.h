@@ -10,9 +10,9 @@
 class OI {
 public:
 	OI();
-	void InitButtons();
 	double ReturnDriverXAxis();
 	double ReturnDriverYAxis();
+	void OIInit();
 
 private:
 	frc::XboxController * _driverStick;

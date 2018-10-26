@@ -18,6 +18,8 @@
 #include <Joystick.h>
 #include <RobotDrive.h>
 #include "../Commands/TeleOpTankDrive.h"
+#include <iostream>
+#include <Robot.h>
 
 WPI_TalonSRX * FrontL;
 WPI_TalonSRX * FrontR;
@@ -37,11 +39,11 @@ void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 	double parsedY;
 	double power = 2.3;
 	//Setting inputs to a power
-	parsedX = pow(abs(xAxis), power) * (xAxis / abs(xAxis));
+	parsedX = pow((xAxis>0)?xAxis:-xAxis, power) * (xAxis / (xAxis>0)?xAxis:-xAxis);
 
-	parsedY = pow(abs(yAxis), power) * (yAxis / abs(yAxis));
+	parsedY = pow((yAxis>0)?yAxis:-yAxis, power) * (yAxis / (yAxis>0)?yAxis:-yAxis);
 
-	if (yAxis > 0) // forward back
+	if (yAxis < 0) // forward back
 	{
 		//TO BE
 		//FILLED IN
@@ -53,7 +55,7 @@ void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 		}
 		else //left forwards
 		{
-			parsedLeft = (parsedY > -parsedX)?parsedY:-parsedX;
+			parsedLeft = (-parsedY > -parsedX)?parsedY:-parsedX;
 			parsedRight = parsedY + parsedX;
 		}
 	}
@@ -67,11 +69,12 @@ void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 		else //left
 		{
 			parsedLeft = parsedY - parsedX;
-			parsedRight = (-parsedY > -parsedX)?parsedY:parsedX;
+			parsedRight = (parsedY > -parsedX)?parsedY:parsedX;
 		}
 	}
+	printf("heyheyheygeyegeygeygey");
+	_diffDrive->TankDrive(-parsedLeft, parsedRight);
 
-	_diffDrive->TankDrive(-1 *parsedLeft, -1 *parsedRight);
 }
 void TankDrive::TankDriveInitialize()
 {
@@ -102,8 +105,8 @@ void TankDrive::TankDriveInitialize()
 		BackR->ConfigOpenloopRamp(.3,0);
 		BackL->ConfigOpenloopRamp(.3,0);
 
-		FrontR->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1);
-		FrontL->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 1);
+		FrontR->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
+		FrontL->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
 
 		FrontR->EnableCurrentLimit(true);
 		FrontL->EnableCurrentLimit(true);
@@ -112,12 +115,12 @@ void TankDrive::TankDriveInitialize()
 
 
 		//PID BTW
-		FrontR->Config_kP(1, RightP, 0);
-		FrontR->Config_kI(1, RightI, 0);
-		FrontR->Config_kD(1, RightD, 0);
-		FrontL->Config_kP(1, LeftP, 0);
-		FrontL->Config_kI(1, LeftI, 0);
-		FrontL->Config_kD(1, LeftD, 0);
+		FrontR->Config_kP(0, RightP, 0);
+		FrontR->Config_kI(0, RightI, 0);
+		FrontR->Config_kD(0, RightD, 0);
+		FrontL->Config_kP(0, LeftP, 0);
+		FrontL->Config_kI(0, LeftI, 0);
+		FrontL->Config_kD(0, LeftD, 0);
 
 		FrontR->ConfigNominalOutputForward(NominalOutput);
 		FrontR->ConfigNominalOutputReverse(-NominalOutput);
@@ -136,11 +139,13 @@ void TankDrive::TankDriveInitialize()
 		FrontR->ConfigNeutralDeadband(PIDDeadband);
 		FrontL->ConfigNeutralDeadband(PIDDeadband);
 
-		FrontR->SetSelectedSensorPosition(0,1,0);
-		FrontL->SetSelectedSensorPosition(0,1,0);
+		FrontR->SetSelectedSensorPosition(0,0,0);
+		FrontL->SetSelectedSensorPosition(0,0,0);
 
-		_diffDrive->SetSafetyEnabled(true);
-		_diffDrive->SetExpiration(.500);
+		_diffDrive->SetSafetyEnabled(false);
+		BackL->SetSafetyEnabled(false);
+		BackR->SetSafetyEnabled(false);
+		_diffDrive->SetExpiration(.5);
 
 		BackL->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, frontLeftDrive);
 		BackR->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, frontRightDrive);
@@ -149,14 +154,19 @@ void TankDrive::TankDriveInitialize()
 void TankDrive::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 	// SetDefaultCommand(new MySpecialCommand());
-	if (!initialized)
-	{
+	if (!initialized) {
 		TankDrive::TankDriveInitialize();
 	}
-	else
-	{
-		SetDefaultCommand(new TeleOpTankDrive());
-	}
+	Robot::m_tankdrive.SetDefaultCommand(new TeleOpTankDrive());
+
+
+
+
+
+
+
+
+
 }
 
 // Put methods for controlling this subsystem
