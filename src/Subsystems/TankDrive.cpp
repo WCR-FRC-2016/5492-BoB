@@ -28,8 +28,6 @@ WPI_TalonSRX * BackR;
 
 DifferentialDrive * _diffDrive;
 TankDrive::TankDrive() : frc::Subsystem("TankDrive"){
-	initialized = false;
-
 }
 void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 {

@@ -17,12 +17,14 @@
 #include "OI.h"
 #include "Subsystems/ExampleSubsystem.h"
 #include "Subsystems/TankDrive.h"
+#include "Subsystems/DoWeEvenLift.h"
 
 class Robot : public frc::TimedRobot {
 public:
 	static ExampleSubsystem m_subsystem;
 	static OI m_oi;
 	static TankDrive m_tankdrive;
+	static DoWeEvenLift m_doweevenlift;
 
 	void RobotInit() override;
 	void DisabledInit() override;

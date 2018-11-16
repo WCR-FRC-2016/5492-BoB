@@ -16,6 +16,7 @@
 #include <RobotDrive.h>
 #include <WPILib.h>
 #include <Subsystems/TankDrive.h>
+#include <Subsystems/DoWeEvenLift.h>
 #include "Drive/DifferentialDrive.h"
 #include <iostream>
 
@@ -23,6 +24,7 @@
 ExampleSubsystem Robot::m_subsystem;
 TankDrive Robot::m_tankdrive;
 OI Robot::m_oi;
+DoWeEvenLift Robot::m_doweevenlift;
 
 
 
