@@ -10,10 +10,13 @@
 class OI {
 public:
 	OI();
+
 	double ReturnDriverXAxis();
 	double ReturnDriverYAxis();
 	void OIInit();
-
+	double DeadBand(double joystick);
+	double ReturnManualLeftYAxis();
 private:
 	frc::XboxController * _driverStick;
+	frc::XboxController * _manualStick;
 };

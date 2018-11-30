@@ -12,11 +12,11 @@
 #include <XboxController.h>
 #include <GenericHID.h>
 #include <DriverStation.h>
-
-
+double tempX, tempY;
 OI::OI() {
 
 	 _driverStick = 0;
+	 _manualStick = 0;
 		//JoystickButton * driveButton1 = new JoystickButton(_driverStick, 1);
 	// Process operator interface input here.
 
@@ -26,13 +26,27 @@ void OI::OIInit(){
 	{
 		_driverStick = new frc::XboxController(0);
 	}
+	if (_manualStick == 0)
+	{
+		_manualStick = new frc::XboxController(1);
+	}
 }
 
 double OI::ReturnDriverXAxis(){
-	return _driverStick->GetX(frc::GenericHID::kRightHand);
+	return DeadBand(_driverStick->GetX(frc::GenericHID::kRightHand));
 
 }
 double OI::ReturnDriverYAxis(){
-	return _driverStick->GetY(frc::GenericHID::kLeftHand);
+	return DeadBand(_driverStick->GetY(frc::GenericHID::kLeftHand));
 }
 
+double OI::DeadBand(double joystick) {
+	if (-0.2 < joystick && joystick < 0.2) {
+		joystick = 0;
+	}
+		return joystick;
+}
+
+double OI::ReturnManualLeftYAxis(){
+	return DeadBand(_manualStick->GetY(frc::GenericHID::kLeftHand));
+}

@@ -14,7 +14,8 @@
 #include <Commands/Scheduler.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <IterativeRobot.h>
-
+WPI_TalonSRX* LiftLeader;
+WPI_TalonSRX* LiftFollower;
 DoWeEvenLift::DoWeEvenLift() : frc::Subsystem("DoWeEvenLift") {
 }
 
@@ -24,7 +25,7 @@ void DoWeEvenLift::InitDefaultCommand() {
 	if (!initialized) {
 		DoWeEvenLift::DoWeEvenLiftInitialize();
 	}
-	// TODO: Create default command for DoWeEvenLift
+
 	Robot::m_doweevenlift.SetDefaultCommand(new TeleopLift());
 
 }
@@ -34,11 +35,21 @@ void DoWeEvenLift::DoWeEvenLiftInitialize() {
 
 	OpenLiftMotor->CurrentLimitAmp=50;
 
-	DoWeEvenLift::LiftLeader = OpenLiftMotor->Open(elevator1);
-	DoWeEvenLift::LiftFollower = OpenLiftMotor->Open(elevator2);
+	LiftFollower = OpenLiftMotor->Open(elevator2);
+	OpenLiftMotor->Invert = true;
+	LiftLeader = OpenLiftMotor->Open(elevator1);
 
-	DoWeEvenLift::LiftFollower->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, elevator1);
+	LiftFollower->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, elevator1);
 
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+void DoWeEvenLift::ManualLift(double joystick) {
+	if (joystick < 0) {
+		joystick = joystick / 1;
+	}
+	else {
+		joystick = joystick / 1.5;
+	}
+	LiftLeader->Set(joystick);
+}

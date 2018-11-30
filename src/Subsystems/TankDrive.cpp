@@ -103,8 +103,8 @@ void TankDrive::TankDriveInitialize()
 		BackR->ConfigOpenloopRamp(.3,0);
 		BackL->ConfigOpenloopRamp(.3,0);
 
-		FrontR->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
-		FrontL->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
+		FrontR->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 0);
+		FrontL->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 0);
 
 		FrontR->EnableCurrentLimit(true);
 		FrontL->EnableCurrentLimit(true);
@@ -120,22 +120,22 @@ void TankDrive::TankDriveInitialize()
 		FrontL->Config_kI(0, LeftI, 0);
 		FrontL->Config_kD(0, LeftD, 0);
 
-		FrontR->ConfigNominalOutputForward(NominalOutput);
-		FrontR->ConfigNominalOutputReverse(-NominalOutput);
-		FrontL->ConfigNominalOutputForward(NominalOutput);
-		FrontL->ConfigNominalOutputReverse(-NominalOutput);
+		FrontR->ConfigNominalOutputForward(NominalOutput, 0);
+		FrontR->ConfigNominalOutputReverse(-NominalOutput, 0);
+		FrontL->ConfigNominalOutputForward(NominalOutput, 0);
+		FrontL->ConfigNominalOutputReverse(-NominalOutput, 0);
 
 		FrontR->SetSensorPhase(false);
 		FrontL->SetSensorPhase(false);
 
 
-		FrontR->ConfigPeakOutputForward(MaxOutput);
-		FrontR->ConfigPeakOutputReverse(-MaxOutput);
-		FrontL->ConfigPeakOutputForward(MaxOutput);
-		FrontL->ConfigPeakOutputReverse(-MaxOutput);
+		FrontR->ConfigPeakOutputForward(MaxOutput, 0);
+		FrontR->ConfigPeakOutputReverse(-MaxOutput, 0);
+		FrontL->ConfigPeakOutputForward(MaxOutput, 0);
+		FrontL->ConfigPeakOutputReverse(-MaxOutput, 0);
 
-		FrontR->ConfigNeutralDeadband(PIDDeadband);
-		FrontL->ConfigNeutralDeadband(PIDDeadband);
+		FrontR->ConfigNeutralDeadband(PIDDeadband, 0);
+		FrontL->ConfigNeutralDeadband(PIDDeadband, 0);
 
 		FrontR->SetSelectedSensorPosition(0,0,0);
 		FrontL->SetSelectedSensorPosition(0,0,0);

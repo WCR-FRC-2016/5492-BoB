@@ -15,12 +15,10 @@ private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 	bool initialized = false;
-	WPI_TalonSRX* LiftLeader;
-    WPI_TalonSRX* LiftFollower;
 public:
 	DoWeEvenLift();
 	void InitDefaultCommand() override;
 	void DoWeEvenLiftInitialize();
-
+	void ManualLift(double joystick);
 };
 

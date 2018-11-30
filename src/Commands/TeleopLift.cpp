@@ -6,22 +6,26 @@
 /*----------------------------------------------------------------------------*/
 
 #include "TeleopLift.h"
-
+#include "../Robot.h"
+#include "OI.h"
 // TODO: Everything please!
 
 TeleopLift::TeleopLift() {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
+	Requires(&Robot::m_doweevenlift);
+
 }
 
 // Called just before this Command runs the first time
 void TeleopLift::Initialize() {
+	Robot::m_doweevenlift.DoWeEvenLiftInitialize();
 
 }
 
 // Called repeatedly when this Command is scheduled to run
 void TeleopLift::Execute() {
-
+	Robot::m_doweevenlift.ManualLift(Robot::m_oi.ReturnManualLeftYAxis());
 }
 
 // Make this return true when this Command no longer needs to run execute()
