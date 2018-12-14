@@ -70,7 +70,6 @@ void TankDrive::ArcadeDrive(double xAxis, double yAxis)
 			parsedRight = (parsedY > -parsedX)?parsedY:parsedX;
 		}
 	}
-	printf("heyheyheygeyegeygeygey");
 	_diffDrive->TankDrive(-parsedLeft, parsedRight);
 
 }

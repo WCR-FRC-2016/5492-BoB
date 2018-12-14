@@ -14,6 +14,7 @@
 #include <Commands/Scheduler.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <IterativeRobot.h>
+#include <iostream>
 WPI_TalonSRX* LiftLeader;
 WPI_TalonSRX* LiftFollower;
 DoWeEvenLift::DoWeEvenLift() : frc::Subsystem("DoWeEvenLift") {
@@ -38,8 +39,8 @@ void DoWeEvenLift::DoWeEvenLiftInitialize() {
 	LiftFollower = OpenLiftMotor->Open(elevator2);
 	OpenLiftMotor->Invert = true;
 	LiftLeader = OpenLiftMotor->Open(elevator1);
-
 	LiftFollower->Set(ctre::phoenix::motorcontrol::ControlMode::Follower, elevator1);
+	initialized = true;
 
 }
 // Put methods for controlling this subsystem
@@ -51,5 +52,5 @@ void DoWeEvenLift::ManualLift(double joystick) {
 	else {
 		joystick = joystick / 1.5;
 	}
-	LiftLeader->Set(joystick);
+	LiftLeader->Set(-joystick);
 }
